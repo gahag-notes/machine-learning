@@ -1,0 +1,88 @@
+% Created 2019-03-14 Thu 19:53
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage[margin=2cm]{geometry}
+\DeclareMathOperator{\sign}{sign}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.2.1)}, 
+ pdflang={English}}
+\begin{document}
+
+
+\section{Supervised learning}
+\label{sec:org4454edf}
+Method where you train the program by feeding the learning algorithm with a mapping of
+inputs to correct outputs.
+\subsection{Regression}
+\label{sec:orgc3a62ad}
+Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
+examples.
+\subsection{Classification}
+\label{sec:org4689ba9}
+Outputs are discrete variables (category labels). Learn a decision boundary that
+separates one class from the other. Generally, a confidence is also desired, i.e.,
+how sure are we that the input belongs to the chosen category.
+\subsection{Training set}
+\label{sec:orgefdb8c5}
+The training set is a set of \(m\) \((X,\, y)\) pairs, where:
+\begin{align*}
+  X \in \mathbb{R}^d & \quad\text{models the input.} \\
+  y \in \{0, 1\} & \quad\text{models the output.}
+\end{align*}
+\subsection{Error function}
+\label{sec:orgfaf459b}
+The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
+dataset \(\{ (X,\, y) \}\) of size \(m\) is:
+\[
+  \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
+\]
+\subsection{Perceptron}
+\label{sec:org74a3efb}
+Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
+   w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
+\[
+  f_W(X) = \sign(W^{\top} X)
+\]
+If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
+If \(x_i\) is evidence for denial, then \(w_i\) should be low.
+\subsubsection{Learning algorithm}
+\label{sec:orgfec9ec2}
+The learning algorithm of the Perceptron is quite simple. For a training set
+\(S = \{ \, (X_1,\, y_1),\enspace (X_1,\, y_1),\enspace \hdots \, \}\)
+\begin{itemize}
+\item Show each sample in sequence repetitively.
+\item If the output is correct, do nothing.
+\item If the produced output is negative, and the correct output is positive,
+increase/decrease the weights whose inputs are positive/negative.
+\item If the produced output is positive, and the correct output is negative,
+decrease/increase the weights whose inputs are positive/negative.
+\end{itemize}
+\section{Reinforcement learning}
+\label{sec:org021e025}
+Method where you train the program by rewarding the learning algorithm positively or
+negatively according to the produced results. This method is similar to how we teach
+animals.
+\section{Unsupervised learning}
+\label{sec:org4535cec}
+Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
+\end{document}

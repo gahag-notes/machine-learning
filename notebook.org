@@ -1,0 +1,55 @@
+# -*- after-save-hook: org-latex-export-to-pdf; -*-
+#+latex_header: \usepackage[margin=2cm]{geometry}
+#+latex_header: \DeclareMathOperator{\sign}{sign}
+
+* Supervised learning
+  Method where you train the program by feeding the learning algorithm with a mapping of
+  inputs to correct outputs.
+** Regression
+   Regression is curve fitting: learn a continuous input $\to$ output mapping from a set of
+   examples.
+** Classification
+   Outputs are discrete variables (category labels). Learn a decision boundary that
+   separates one class from the other. Generally, a confidence is also desired, i.e.,
+   how sure are we that the input belongs to the chosen category.
+** Training set
+   The training set is a set of $m$ $(X,\, y)$ pairs, where:
+   #+begin_export latex
+   \begin{align*}
+     X \in \mathbb{R}^d & \quad\text{models the input.} \\
+     y \in \{0, 1\} & \quad\text{models the output.}
+   \end{align*}
+   #+end_export
+** Error function
+   The error function for a model $f: X \mapsto y$ parameterized by $W$ applied to a
+   dataset $\{ (X,\, y) \}$ of size $m$ is:
+   #+begin_export latex
+   \[
+     \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
+   \]
+   #+end_export
+** Perceptron
+   Perceptron is the trivial neural network. The model for a parameter $W = (\text{threshold},\,
+   w_1,\, \hdots,\, w_d)$ and inputs of the form $(1,\, x_1,\, \hdots,\, x_d)$ is given by
+   #+begin_export latex
+   \[
+     f_W(X) = \sign(W^{\top} X)
+   \]
+   #+end_export
+   If $x_i$ is evidence for approval, then $w_i$ should be high. \\
+   If $x_i$ is evidence for denial, then $w_i$ should be low.
+*** Learning algorithm
+    The learning algorithm of the Perceptron is quite simple. For a training set
+    $S = \{ \, (X_1,\, y_1),\enspace (X_1,\, y_1),\enspace \hdots \, \}$
+    - Show each sample in sequence repetitively.
+    - If the output is correct, do nothing.
+    - If the produced output is negative, and the correct output is positive,
+      increase/decrease the weights whose inputs are positive/negative.
+    - If the produced output is positive, and the correct output is negative,
+      decrease/increase the weights whose inputs are positive/negative.
+* Reinforcement learning
+  Method where you train the program by rewarding the learning algorithm positively or
+  negatively according to the produced results. This method is similar to how we teach
+  animals.
+* Unsupervised learning
+  Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.

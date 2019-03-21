@@ -1,4 +1,4 @@
-% Created 2019-03-14 Thu 19:53
+% Created 2019-03-21 Thu 19:28
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -17,6 +17,7 @@
 \usepackage{minted}
 \usepackage[margin=2cm]{geometry}
 \DeclareMathOperator{\sign}{sign}
+\setlength{\parindent}{0cm}
 \date{\today}
 \title{}
 \hypersetup{
@@ -24,40 +25,40 @@
  pdftitle={},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 26.1 (Org mode 9.2.1)}, 
+ pdfcreator={Emacs 26.1 (Org mode 9.2.2)}, 
  pdflang={English}}
 \begin{document}
 
 
 \section{Supervised learning}
-\label{sec:org4454edf}
+\label{sec:org5a2a38b}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:orgc3a62ad}
+\label{sec:org4c58c3a}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:org4689ba9}
+\label{sec:org089fd14}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:orgefdb8c5}
+\label{sec:org26739e9}
 The training set is a set of \(m\) \((X,\, y)\) pairs, where:
 \begin{align*}
   X \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orgfaf459b}
+\label{sec:orgb3b41e8}
 The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
 dataset \(\{ (X,\, y) \}\) of size \(m\) is:
 \[
   \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org74a3efb}
+\label{sec:org900b147}
 Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -66,23 +67,39 @@ Perceptron is the trivial neural network. The model for a parameter \(W = (\text
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:orgfec9ec2}
-The learning algorithm of the Perceptron is quite simple. For a training set
-\(S = \{ \, (X_1,\, y_1),\enspace (X_1,\, y_1),\enspace \hdots \, \}\)
+\label{sec:orgbbe2efd}
+The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
+    1]\) is used to scale each step. the For a training set \(S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
+    y_1),\enspace \hdots \, \}\)
 \begin{itemize}
-\item Show each sample in sequence repetitively.
+\item Starting with random weights, show each sample in sequence repetitively.
 \item If the output is correct, do nothing.
-\item If the produced output is negative, and the correct output is positive,
-increase/decrease the weights whose inputs are positive/negative.
-\item If the produced output is positive, and the correct output is negative,
-decrease/increase the weights whose inputs are positive/negative.
+\item If the produced output is negative, and the correct output is positive, increase the weights.
+\item If the produced output is positive, and the correct output is negative, decrease the weights.
+\item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
+\subsection{Error}
+\label{sec:orgd1f9570}
+The error function for a model \(f\) in a \textbf{training} sample is
+\[ E_{\text{in}}(f) \]
+This function is known and calculable.
+\\[10pt]
+The error function for a model \(f\) in a \textbf{test} sample is
+\[ E_{\text{ou}t}(f) \]
+This function is \textbf{not} known, and only \textbf{approachable}.
+\\[10pt]
+Given a model \(f\) in a set of \(M\) models, the bound for the probability of the error
+deviation surpassing a given \(\epsilon\) is
+\[
+  \mathbb{P}\left(\big| E_{\text{in}}(f) - E_{\text{ou}t}(f) \big| > \big\epsilon\right) \leq 2Me^{-2N\big\epsilon^2}
+\]
+Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \section{Reinforcement learning}
-\label{sec:org021e025}
+\label{sec:org0bc931c}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:org4535cec}
+\label{sec:orgb46f256}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

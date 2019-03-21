@@ -1,6 +1,7 @@
 # -*- after-save-hook: org-latex-export-to-pdf; -*-
 #+latex_header: \usepackage[margin=2cm]{geometry}
 #+latex_header: \DeclareMathOperator{\sign}{sign}
+#+latex_header: \setlength{\parindent}{0cm}
 
 * Supervised learning
   Method where you train the program by feeding the learning algorithm with a mapping of
@@ -39,14 +40,35 @@
    If $x_i$ is evidence for approval, then $w_i$ should be high. \\
    If $x_i$ is evidence for denial, then $w_i$ should be low.
 *** Learning algorithm
-    The learning algorithm of the Perceptron is quite simple. For a training set
-    $S = \{ \, (X_1,\, y_1),\enspace (X_1,\, y_1),\enspace \hdots \, \}$
-    - Show each sample in sequence repetitively.
+    The learning algorithm of the Perceptron is quite simple. The learning rate $\in (0,\,
+    1]$ is used to scale each step. the For a training set $S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
+    y_1),\enspace \hdots \, \}$
+    - Starting with random weights, show each sample in sequence repetitively.
     - If the output is correct, do nothing.
-    - If the produced output is negative, and the correct output is positive,
-      increase/decrease the weights whose inputs are positive/negative.
-    - If the produced output is positive, and the correct output is negative,
-      decrease/increase the weights whose inputs are positive/negative.
+    - If the produced output is negative, and the correct output is positive, increase the weights.
+    - If the produced output is positive, and the correct output is negative, decrease the weights.
+    - The amount to increase/decrease is given by the current sample scaled by the learning rate.
+** Error
+   The error function for a model $f$ in a *training* sample is
+   #+begin_export latex
+   \[ E_{\text{in}}(f) \]
+   #+end_export
+   This function is known and calculable.
+   @@latex:\\[10pt]@@
+   The error function for a model $f$ in a *test* sample is
+   #+begin_export latex
+   \[ E_{\text{ou}t}(f) \]
+   #+end_export
+   This function is *not* known, and only *approachable*.
+   @@latex:\\[10pt]@@
+   Given a model $f$ in a set of $M$ models, the bound for the probability of the error
+   deviation surpassing a given $\epsilon$ is
+   #+begin_export latex
+   \[
+     \mathbb{P}\left(\big| E_{\text{in}}(f) - E_{\text{ou}t}(f) \big| > \big\epsilon\right) \leq 2Me^{-2N\big\epsilon^2}
+   \]
+   #+end_export
+   Notably, $E_{\text{in}}(f)$ and $E_{\text{out}}(f)$ deviates as $f$ becomes complex.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

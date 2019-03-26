@@ -1,4 +1,4 @@
-% Created 2019-03-21 Thu 19:28
+% Created 2019-03-26 Tue 18:19
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,34 +31,34 @@
 
 
 \section{Supervised learning}
-\label{sec:org5a2a38b}
+\label{sec:org0ec48b1}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:org4c58c3a}
+\label{sec:orgab8086c}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:org089fd14}
+\label{sec:org81aa301}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:org26739e9}
+\label{sec:org0fe21d5}
 The training set is a set of \(m\) \((X,\, y)\) pairs, where:
 \begin{align*}
   X \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orgb3b41e8}
+\label{sec:orgb1c2268}
 The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
 dataset \(\{ (X,\, y) \}\) of size \(m\) is:
 \[
   \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org900b147}
+\label{sec:org73f3032}
 Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -67,7 +67,7 @@ Perceptron is the trivial neural network. The model for a parameter \(W = (\text
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:orgbbe2efd}
+\label{sec:orgc0e8beb}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
     1]\) is used to scale each step. the For a training set \(S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
     y_1),\enspace \hdots \, \}\)
@@ -79,7 +79,7 @@ The learning algorithm of the Perceptron is quite simple. The learning rate \(\i
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:orgd1f9570}
+\label{sec:org078ee5d}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable.
@@ -94,12 +94,29 @@ deviation surpassing a given \(\epsilon\) is
   \mathbb{P}\left(\big| E_{\text{in}}(f) - E_{\text{ou}t}(f) \big| > \big\epsilon\right) \leq 2Me^{-2N\big\epsilon^2}
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
+\subsubsection{Empirical error minimization}
+\label{sec:org26a96e5}
+During the learning algorithm, always conserve the weights that produce the lower error. \\
+This has a disadvantage: It memorizes the training set.
+\subsection{Ensemble learning}
+\label{sec:org7efa6c1}
+Ensemble learning consists in combining several simple models to form a more complex
+model.
+\begin{description}
+\item[{Bagging:}] Each model training with a different dataset
+\item[{Boosting:}] Same dataset, but instrumented for each model to mitigate the weakness of
+others
+\end{description}
+\subsection{Learning decision trees}
+\label{sec:org031237a}
+Each layer is consists of an attribute that splits the data into subsets that are
+ideally disjoint.
 \section{Reinforcement learning}
-\label{sec:org0bc931c}
+\label{sec:orgc988d77}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:orgb46f256}
+\label{sec:orgf13811b}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

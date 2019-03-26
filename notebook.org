@@ -69,6 +69,18 @@
    \]
    #+end_export
    Notably, $E_{\text{in}}(f)$ and $E_{\text{out}}(f)$ deviates as $f$ becomes complex.
+*** Empirical error minimization
+    During the learning algorithm, always conserve the weights that produce the lower error. \\
+    This has a disadvantage: It memorizes the training set.
+** Ensemble learning
+   Ensemble learning consists in combining several simple models to form a more complex
+   model.
+   - Bagging: :: Each model training with a different dataset
+   - Boosting: :: Same dataset, but instrumented for each model to mitigate the weakness of
+                 others
+** Learning decision trees
+   Each layer is consists of an attribute that splits the data into subsets that are
+   ideally disjoint.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

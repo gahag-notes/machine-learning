@@ -1,4 +1,4 @@
-% Created 2019-03-26 Tue 18:19
+% Created 2019-03-30 Sat 22:53
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -18,6 +18,11 @@
 \usepackage[margin=2cm]{geometry}
 \DeclareMathOperator{\sign}{sign}
 \setlength{\parindent}{0cm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+\usetikzlibrary{arrows, decorations.markings}
+\usetikzlibrary{3d}
+\usetikzlibrary{shapes.geometric,decorations.fractals,shadows}
 \date{\today}
 \title{}
 \hypersetup{
@@ -31,34 +36,34 @@
 
 
 \section{Supervised learning}
-\label{sec:org0ec48b1}
+\label{sec:orgf276acc}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:orgab8086c}
+\label{sec:org6473bdc}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:org81aa301}
+\label{sec:org4e2c761}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:org0fe21d5}
+\label{sec:org50ab47a}
 The training set is a set of \(m\) \((X,\, y)\) pairs, where:
 \begin{align*}
   X \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orgb1c2268}
+\label{sec:org7dfecde}
 The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
 dataset \(\{ (X,\, y) \}\) of size \(m\) is:
 \[
   \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org73f3032}
+\label{sec:org58ea9bd}
 Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -67,7 +72,7 @@ Perceptron is the trivial neural network. The model for a parameter \(W = (\text
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:orgc0e8beb}
+\label{sec:orge94ac3e}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
     1]\) is used to scale each step. the For a training set \(S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
     y_1),\enspace \hdots \, \}\)
@@ -79,7 +84,7 @@ The learning algorithm of the Perceptron is quite simple. The learning rate \(\i
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:org078ee5d}
+\label{sec:orgd5c2c4e}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable.
@@ -95,11 +100,11 @@ deviation surpassing a given \(\epsilon\) is
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \subsubsection{Empirical error minimization}
-\label{sec:org26a96e5}
+\label{sec:org854139b}
 During the learning algorithm, always conserve the weights that produce the lower error. \\
 This has a disadvantage: It memorizes the training set.
 \subsection{Ensemble learning}
-\label{sec:org7efa6c1}
+\label{sec:orgc087cb9}
 Ensemble learning consists in combining several simple models to form a more complex
 model.
 \begin{description}
@@ -108,15 +113,89 @@ model.
 others
 \end{description}
 \subsection{Learning decision trees}
-\label{sec:org031237a}
-Each layer is consists of an attribute that splits the data into subsets that are
-ideally disjoint.
+\label{sec:orge6f7be8}
+Each layer in the tree consists of an attribute that splits the data into subsets that
+are ideally disjoint. \\
+The entropy of the subsets produced is a measure of how disjoint they are.
+\\[5pt]
+For a set containing \(p\) positive and \(n\) negatives, the entropy is
+\[
+  H\left(\frac{p}{p+n}, \frac{n}{p+n} \right) = - \frac{p}{p + n} \log\left( \frac{p}{p + n} \right) 
+                                                - \frac{n}{p + n}\log\left( \frac{n}{p + n} \right)
+\]
+A given attribute \(A\), with \(k\) distinct values, divides the training set \(S\) into
+subsets \(S_1, S_2, \hdots, S_k\). \\
+The expected entropy remaining after applying \(A\) is
+\[
+  EH(A) = \sum_{i = 1}^{k} \left[ \frac{p_i + n_i}{p + n} \cdot H\left( \frac{p_i}{p_i + n_i}, \frac{n_i}{p_i + n_i} \right) \right]
+\]
+The information gain, i.e. the reduction in entropy for \(A\), is
+\[
+  I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
+\]
+\subsubsection{Capacity}
+\label{sec:org8726965}
+The capacity is a measure of when the training error is a good approximation for the
+test error.
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xlabel near ticks,
+        ylabel near ticks,
+        xlabel     = {Training dataset size},
+        ylabel     = {Error},
+        xmin       = 0,
+        ymin       = 0,
+        ymax       = 15,
+        height     = 7cm,
+        width      = 10cm,
+        xtick      = \empty,
+        ytick      = \empty,
+        black
+      ]
+      \addplot [
+        samples=200,
+        domain=0:8,
+        blue
+      ] {(ln(200*x + 1)/ln(7)) + 6.3};
+      \addplot [
+        samples=200,
+        domain=0.1:8,
+        blue
+      ] {1/log2(x + 1) + 10};
+      \addplot [
+        samples=200,
+        domain=0:8,
+        red
+      ] {log2(x + 1)};
+      \addplot [
+        samples=200,
+        domain=0.1:8,
+        red
+      ] {1/log10(x/2.5 + 1) + 2};
+
+      \draw [black, dashed] (axis cs: 6.5, 0) |- (axis cs: 6.5, 4);
+      \draw [black, dashed] (axis cs: 2.5, 0) |- (axis cs: 2.5, 10.6);
+      \node [black] at (7.5, 2.2) {$E_{\text{in}}$};
+      \node [black] at (7.5, 4.5) {$E_{\text{out}}$};
+      \node [black] at (7.5, 9.3) {$E_{\text{in}}$};
+      \node [black] at (7.5, 11.3) {$E_{\text{out}}$};
+      \node [blue] at (5.3, 11.3) {simple model};
+      \node [red] at (5.3, 5) {complex model};
+      \node [black] at (3.3, 8) {capacity};
+      \node [black] at (5.7, 0.7) {capacity};
+
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
 \section{Reinforcement learning}
-\label{sec:orgc988d77}
+\label{sec:org33f3ade}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:orgf13811b}
+\label{sec:org2bde540}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

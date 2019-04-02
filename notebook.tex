@@ -1,4 +1,4 @@
-% Created 2019-03-30 Sat 22:53
+% Created 2019-04-02 Tue 17:55
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -36,34 +36,34 @@
 
 
 \section{Supervised learning}
-\label{sec:orgf276acc}
+\label{sec:org52de831}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:org6473bdc}
+\label{sec:orgcf6c2a1}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:org4e2c761}
+\label{sec:orge785244}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:org50ab47a}
+\label{sec:org8aa04fe}
 The training set is a set of \(m\) \((X,\, y)\) pairs, where:
 \begin{align*}
   X \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:org7dfecde}
+\label{sec:orgd74cce6}
 The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
 dataset \(\{ (X,\, y) \}\) of size \(m\) is:
 \[
   \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org58ea9bd}
+\label{sec:orgb4c9363}
 Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -72,7 +72,7 @@ Perceptron is the trivial neural network. The model for a parameter \(W = (\text
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:orge94ac3e}
+\label{sec:org347ec53}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
     1]\) is used to scale each step. the For a training set \(S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
     y_1),\enspace \hdots \, \}\)
@@ -84,7 +84,7 @@ The learning algorithm of the Perceptron is quite simple. The learning rate \(\i
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:orgd5c2c4e}
+\label{sec:orgf3b5959}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable.
@@ -100,11 +100,11 @@ deviation surpassing a given \(\epsilon\) is
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \subsubsection{Empirical error minimization}
-\label{sec:org854139b}
+\label{sec:orge0648c3}
 During the learning algorithm, always conserve the weights that produce the lower error. \\
 This has a disadvantage: It memorizes the training set.
 \subsection{Ensemble learning}
-\label{sec:orgc087cb9}
+\label{sec:org03ba537}
 Ensemble learning consists in combining several simple models to form a more complex
 model.
 \begin{description}
@@ -113,7 +113,7 @@ model.
 others
 \end{description}
 \subsection{Learning decision trees}
-\label{sec:orge6f7be8}
+\label{sec:orge27d6ae}
 Each layer in the tree consists of an attribute that splits the data into subsets that
 are ideally disjoint. \\
 The entropy of the subsets produced is a measure of how disjoint they are.
@@ -133,8 +133,8 @@ The information gain, i.e. the reduction in entropy for \(A\), is
 \[
   I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
 \]
-\subsubsection{Capacity}
-\label{sec:org8726965}
+\subsection{Capacity}
+\label{sec:org88142a3}
 The capacity is a measure of when the training error is a good approximation for the
 test error.
 \begin{figure}[H]
@@ -190,12 +190,22 @@ test error.
     \end{axis}
   \end{tikzpicture}
 \end{figure}
+\subsection{Bias and Variance}
+\label{sec:org0dc3a9e}
+\textbf{Bias} is the error due to the fact that the set of functions does not contain the
+target function.
+\\[5pt]
+\textbf{Variance} is the error due to the fact that if we had been using another training set
+drawn from the same distribution, we would have obtained another function.
+\\[5pt]
+\textbf{Regularization} is a method for minimizing the training error, as long as it is still a
+good approximation for the test error, trading-off accuracy for simplicity.
 \section{Reinforcement learning}
-\label{sec:org33f3ade}
+\label{sec:org184596e}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:org2bde540}
+\label{sec:org41c59ae}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

@@ -109,64 +109,73 @@
      I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
    \]
    #+end_export
-*** Capacity
-    The capacity is a measure of when the training error is a good approximation for the
-    test error.
-    #+begin_export latex
-    \begin{figure}[H]
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            axis lines = middle,
-            xlabel near ticks,
-            ylabel near ticks,
-            xlabel     = {Training dataset size},
-            ylabel     = {Error},
-            xmin       = 0,
-            ymin       = 0,
-            ymax       = 15,
-            height     = 7cm,
-            width      = 10cm,
-            xtick      = \empty,
-            ytick      = \empty,
-            black
-          ]
-          \addplot [
-            samples=200,
-            domain=0:8,
-            blue
-          ] {(ln(200*x + 1)/ln(7)) + 6.3};
-          \addplot [
-            samples=200,
-            domain=0.1:8,
-            blue
-          ] {1/log2(x + 1) + 10};
-          \addplot [
-            samples=200,
-            domain=0:8,
-            red
-          ] {log2(x + 1)};
-          \addplot [
-            samples=200,
-            domain=0.1:8,
-            red
-          ] {1/log10(x/2.5 + 1) + 2};
+** Capacity
+   The capacity is a measure of when the training error is a good approximation for the
+   test error.
+   #+begin_export latex
+   \begin{figure}[H]
+     \centering
+     \begin{tikzpicture}
+       \begin{axis}[
+           axis lines = middle,
+           xlabel near ticks,
+           ylabel near ticks,
+           xlabel     = {Training dataset size},
+           ylabel     = {Error},
+           xmin       = 0,
+           ymin       = 0,
+           ymax       = 15,
+           height     = 7cm,
+           width      = 10cm,
+           xtick      = \empty,
+           ytick      = \empty,
+           black
+         ]
+         \addplot [
+           samples=200,
+           domain=0:8,
+           blue
+         ] {(ln(200*x + 1)/ln(7)) + 6.3};
+         \addplot [
+           samples=200,
+           domain=0.1:8,
+           blue
+         ] {1/log2(x + 1) + 10};
+         \addplot [
+           samples=200,
+           domain=0:8,
+           red
+         ] {log2(x + 1)};
+         \addplot [
+           samples=200,
+           domain=0.1:8,
+           red
+         ] {1/log10(x/2.5 + 1) + 2};
 
-          \draw [black, dashed] (axis cs: 6.5, 0) |- (axis cs: 6.5, 4);
-          \draw [black, dashed] (axis cs: 2.5, 0) |- (axis cs: 2.5, 10.6);
-          \node [black] at (7.5, 2.2) {$E_{\text{in}}$};
-          \node [black] at (7.5, 4.5) {$E_{\text{out}}$};
-          \node [black] at (7.5, 9.3) {$E_{\text{in}}$};
-          \node [black] at (7.5, 11.3) {$E_{\text{out}}$};
-          \node [blue] at (5.3, 11.3) {simple model};
-          \node [red] at (5.3, 5) {complex model};
-          \node [black] at (3.3, 8) {capacity};
-          \node [black] at (5.7, 0.7) {capacity};
+         \draw [black, dashed] (axis cs: 6.5, 0) |- (axis cs: 6.5, 4);
+         \draw [black, dashed] (axis cs: 2.5, 0) |- (axis cs: 2.5, 10.6);
+         \node [black] at (7.5, 2.2) {$E_{\text{in}}$};
+         \node [black] at (7.5, 4.5) {$E_{\text{out}}$};
+         \node [black] at (7.5, 9.3) {$E_{\text{in}}$};
+         \node [black] at (7.5, 11.3) {$E_{\text{out}}$};
+         \node [blue] at (5.3, 11.3) {simple model};
+         \node [red] at (5.3, 5) {complex model};
+         \node [black] at (3.3, 8) {capacity};
+         \node [black] at (5.7, 0.7) {capacity};
 
-        \end{axis}
-      \end{tikzpicture}
-    \end{figure}
-    #+end_export
+       \end{axis}
+     \end{tikzpicture}
+   \end{figure}
+   #+end_export
+** Bias and Variance
+   *Bias* is the error due to the fact that the set of functions does not contain the
+   target function.
+   @@latex:\\[5pt]@@
+   *Variance* is the error due to the fact that if we had been using another training set
+   drawn from the same distribution, we would have obtained another function.
+   @@latex:\\[5pt]@@
+   *Regularization* is a method for minimizing the training error, as long as it is still a
+   good approximation for the test error, trading-off accuracy for simplicity.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

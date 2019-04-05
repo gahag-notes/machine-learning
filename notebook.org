@@ -19,36 +19,37 @@
    separates one class from the other. Generally, a confidence is also desired, i.e.,
    how sure are we that the input belongs to the chosen category.
 ** Training set
-   The training set is a set of $m$ $(X,\, y)$ pairs, where:
+   The training set is a set of $m$ $(\vec{X},\, y)$ pairs, where:
    #+begin_export latex
    \begin{align*}
-     X \in \mathbb{R}^d & \quad\text{models the input.} \\
+     \vec{X} \in \mathbb{R}^d & \quad\text{models the input.} \\
      y \in \{0, 1\} & \quad\text{models the output.}
    \end{align*}
    #+end_export
 ** Error function
-   The error function for a model $f: X \mapsto y$ parameterized by $W$ applied to a
-   dataset $\{ (X,\, y) \}$ of size $m$ is:
+   The error function for a model $f: \vec{X} \mapsto y$ parameterized by $\vec{W}$ applied to a
+   dataset $\{ (\vec{X},\, y) \}$ of size $m$ is:
    #+begin_export latex
    \[
-     \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
+     \min_{\vec{W}} \left[ L(\vec{W}) = \sum^m_i{ \big(f_{\vec{W}}(\vec{X}_i) - y_i \big)^2 } \right]
    \]
    #+end_export
 ** Perceptron
-   Perceptron is the trivial neural network. The model for a parameter $W = (\text{threshold},\,
+   Perceptron is the trivial neural network. The model for a parameter $\vec{W} = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)$ and inputs of the form $(1,\, x_1,\, \hdots,\, x_d)$ is given by
    #+begin_export latex
    \[
-     f_W(X) = \sign(W^{\top} X)
+     f_{\vec{W}}(\vec{X}) = \sign(\vec{W} \vec{X})
    \]
    #+end_export
+   Where $\sign$ is the activation function. \\
    If $x_i$ is evidence for approval, then $w_i$ should be high. \\
    If $x_i$ is evidence for denial, then $w_i$ should be low.
 *** Learning algorithm
     The learning algorithm of the Perceptron is quite simple. The learning rate $\in (0,\,
-    1]$ is used to scale each step. the For a training set $S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
-    y_1),\enspace \hdots \, \}$
-    - Starting with random weights, show each sample in sequence repetitively.
+    1]$ is used to scale each step. the For a training set $S = \{ \, (\vec{X}_1,\, y_1),\enspace (\vec{X}_2,\,
+    y_2),\enspace \hdots \, \}$
+    - Starting with random weights, then show each sample in sequence repetitively.
     - If the output is correct, do nothing.
     - If the produced output is negative, and the correct output is positive, increase the weights.
     - If the produced output is positive, and the correct output is negative, decrease the weights.
@@ -167,7 +168,7 @@
      \end{tikzpicture}
    \end{figure}
    #+end_export
-** Bias and Variance
+** Bias and variance
    *Bias* is the error due to the fact that the set of functions does not contain the
    target function.
    @@latex:\\[5pt]@@
@@ -176,6 +177,80 @@
    @@latex:\\[5pt]@@
    *Regularization* is a method for minimizing the training error, as long as it is still a
    good approximation for the test error, trading-off accuracy for simplicity.
+** Single layer neural networks
+   Using the sigmoid as the activation function, and the squared-error loss function:
+   #+begin_export latex
+   \[
+     L(\vec{W}) = \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
+   \]
+   #+end_export
+   To find in which direction the weights minimizes $L$, the gradient is used:
+   #+begin_export latex
+   \[
+     \nabla L(\vec{W}) = \sum_i^m \Delta \cdot \Psi
+   \]
+   #+end_export
+   Where the delta rule is
+   #+begin_export latex
+   \[
+     \Delta = \vec{X}_i \cdot \left( \sigma\left(\vec{W}\vec{X}_i\right) - y_i \right)
+   \]
+   #+end_export
+   And the slope of ligistic is
+   #+begin_export latex
+   \[
+     \Psi = \sigma\left(\vec{W}\vec{X}_i\right) \cdot \left(1 - \sigma\left(\vec{W}\vec{X}_i\right)\right)
+   \]
+   #+end_export
+   @@latex:\newpage@@
+*** Gradient descent algorithm
+    The learning rate $r \in (0,\, 1]$ is used to scale each step.
+    1. Starting with random weights.
+    2. Compute $\nabla L(\vec{W})$.
+    3. $\vec{W} \leftarrow \vec{W} - r \cdot \nabla L(\vec{W}) = \vec{W} - r \cdot \sum\limits_i^m \Delta \Psi$
+    4. Repeat steps 2 and 3 until $\vec{W}$ doesn't change anymore $(10^{-5})$.
+    After each iteration, $L(\vec{W})$ should be checked:
+    1. If $L(\vec{W})$ is converging, the learning rate is correct.
+    2. If $L(\vec{W})$ is diverging, the learning rate is too large.
+    3. If $L(\vec{W})$ is converging slowly, the learning rate too small.
+    Also, the algorithm needs feature scaling
+    #+begin_export latex
+    \[
+      x'_i = \frac{x_i - \min(\vec{X})}{\max(\vec{X}) - \min(\vec{X})}
+    \]
+    #+end_export
+*** Stochastic gradient descent
+    Instead of inspecting the whole dataset to detect the direction which minimize $L$, a
+    single random sample is picked on each step.
+    1. Randomly shuffle the training set.
+    2. Starting with random weights.
+    3. For each sample $(\vec{X_i}, y_i)$: $\>\vec{W} \leftarrow \vec{W} - r \cdot \Delta \Psi$
+    4. Repeat step 3 until $\vec{W}$ doesn't change anymore $(10^{-5})$.
+    Convergence is not so obvious. After each bulk of iterations, e.g. 1000, check $L(\vec{W})$:
+    1. If $L(\vec{W})$ is converging, the learning rate is correct.
+    2. If $L(\vec{W})$ is diverging, the learning rate is too large.
+    3. If $L(\vec{W})$ is converging slowly, the learning rate too small.
+*** Mini batches
+    While GD uses all samples in each iteration, SGD uses only one. A possible middle
+    ground is to use a mini batch of samples in each iteration.
+    #+begin_export latex
+    \[
+      \vec{W} \leftarrow \vec{W} - r \cdot \frac{1}{b} \sum\limits_i^b \Delta \Psi
+    \]
+    #+end_export
+    Where $b$ is the batch size, tipically $10$.
+*** Regularization
+    To prevent large weights, the norm of the weights is added to the loss function:
+    #+begin_export latex
+    \[
+      L(\vec{W}) = |\vec{W}| + \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
+    \]
+    #+end_export
+*** Early stopping (cross validation)
+    Other way to improve is to prevent overfitting:
+    1. Separate the data into training and validation sets.
+    2. Minimize $L(\vec{W})$ on the training set, stopping when $L(\vec{W})$ on the validation set
+       stops improving.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

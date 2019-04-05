@@ -1,4 +1,4 @@
-% Created 2019-04-02 Tue 17:55
+% Created 2019-04-05 Fri 11:52
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -36,55 +36,56 @@
 
 
 \section{Supervised learning}
-\label{sec:org52de831}
+\label{sec:orgb17e083}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:orgcf6c2a1}
+\label{sec:org77518e2}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:orge785244}
+\label{sec:org7ba2ef9}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:org8aa04fe}
-The training set is a set of \(m\) \((X,\, y)\) pairs, where:
+\label{sec:orgbc26ef5}
+The training set is a set of \(m\) \((\vec{X},\, y)\) pairs, where:
 \begin{align*}
-  X \in \mathbb{R}^d & \quad\text{models the input.} \\
+  \vec{X} \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orgd74cce6}
-The error function for a model \(f: X \mapsto y\) parameterized by \(W\) applied to a
-dataset \(\{ (X,\, y) \}\) of size \(m\) is:
+\label{sec:orgf3f8320}
+The error function for a model \(f: \vec{X} \mapsto y\) parameterized by \(\vec{W}\) applied to a
+dataset \(\{ (\vec{X},\, y) \}\) of size \(m\) is:
 \[
-  \min_W \enspace \sum^m_{i=1}{ \big(f_W(X_i) - y_i \big)^2 }
+  \min_{\vec{W}} \left[ L(\vec{W}) = \sum^m_i{ \big(f_{\vec{W}}(\vec{X}_i) - y_i \big)^2 } \right]
 \]
 \subsection{Perceptron}
-\label{sec:orgb4c9363}
-Perceptron is the trivial neural network. The model for a parameter \(W = (\text{threshold},\,
+\label{sec:org40d0a26}
+Perceptron is the trivial neural network. The model for a parameter \(\vec{W} = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
-  f_W(X) = \sign(W^{\top} X)
+  f_{\vec{W}}(\vec{X}) = \sign(\vec{W} \vec{X})
 \]
+Where \(\sign\) is the activation function. \\
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:org347ec53}
+\label{sec:org29d1cd6}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
-    1]\) is used to scale each step. the For a training set \(S = \{ \, (X_1,\, y_1),\enspace (X_1,\,
-    y_1),\enspace \hdots \, \}\)
+    1]\) is used to scale each step. the For a training set \(S = \{ \, (\vec{X}_1,\, y_1),\enspace (\vec{X}_2,\,
+    y_2),\enspace \hdots \, \}\)
 \begin{itemize}
-\item Starting with random weights, show each sample in sequence repetitively.
+\item Starting with random weights, then show each sample in sequence repetitively.
 \item If the output is correct, do nothing.
 \item If the produced output is negative, and the correct output is positive, increase the weights.
 \item If the produced output is positive, and the correct output is negative, decrease the weights.
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:orgf3b5959}
+\label{sec:orgb097b25}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable.
@@ -100,11 +101,11 @@ deviation surpassing a given \(\epsilon\) is
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \subsubsection{Empirical error minimization}
-\label{sec:orge0648c3}
+\label{sec:org658c23c}
 During the learning algorithm, always conserve the weights that produce the lower error. \\
 This has a disadvantage: It memorizes the training set.
 \subsection{Ensemble learning}
-\label{sec:org03ba537}
+\label{sec:org72a1d37}
 Ensemble learning consists in combining several simple models to form a more complex
 model.
 \begin{description}
@@ -113,7 +114,7 @@ model.
 others
 \end{description}
 \subsection{Learning decision trees}
-\label{sec:orge27d6ae}
+\label{sec:orgcea9bef}
 Each layer in the tree consists of an attribute that splits the data into subsets that
 are ideally disjoint. \\
 The entropy of the subsets produced is a measure of how disjoint they are.
@@ -134,7 +135,7 @@ The information gain, i.e. the reduction in entropy for \(A\), is
   I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
 \]
 \subsection{Capacity}
-\label{sec:org88142a3}
+\label{sec:orge899688}
 The capacity is a measure of when the training error is a good approximation for the
 test error.
 \begin{figure}[H]
@@ -190,8 +191,8 @@ test error.
     \end{axis}
   \end{tikzpicture}
 \end{figure}
-\subsection{Bias and Variance}
-\label{sec:org0dc3a9e}
+\subsection{Bias and variance}
+\label{sec:orgd904fba}
 \textbf{Bias} is the error due to the fact that the set of functions does not contain the
 target function.
 \\[5pt]
@@ -200,12 +201,88 @@ drawn from the same distribution, we would have obtained another function.
 \\[5pt]
 \textbf{Regularization} is a method for minimizing the training error, as long as it is still a
 good approximation for the test error, trading-off accuracy for simplicity.
+\subsection{Single layer neural networks}
+\label{sec:orga1371e6}
+Using the sigmoid as the activation function, and the squared-error loss function:
+\[
+  L(\vec{W}) = \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
+\]
+To find in which direction the weights minimizes \(L\), the gradient is used:
+\[
+  \nabla L(\vec{W}) = \sum_i^m \Delta \cdot \Psi
+\]
+Where the delta rule is
+\[
+  \Delta = \vec{X}_i \cdot \left( \sigma\left(\vec{W}\vec{X}_i\right) - y_i \right)
+\]
+And the slope of ligistic is
+\[
+  \Psi = \sigma\left(\vec{W}\vec{X}_i\right) \cdot \left(1 - \sigma\left(\vec{W}\vec{X}_i\right)\right)
+\]
+\newpage
+\subsubsection{Gradient descent algorithm}
+\label{sec:org269215e}
+The learning rate \(r \in (0,\, 1]\) is used to scale each step.
+\begin{enumerate}
+\item Starting with random weights.
+\item Compute \(\nabla L(\vec{W})\).
+\item \(\vec{W} \leftarrow \vec{W} - r \cdot \nabla L(\vec{W}) = \vec{W} - r \cdot \sum\limits_i^m \Delta \Psi\)
+\item Repeat steps 2 and 3 until \(\vec{W}\) doesn't change anymore \((10^{-5})\).
+\end{enumerate}
+After each iteration, \(L(\vec{W})\) should be checked:
+\begin{enumerate}
+\item If \(L(\vec{W})\) is converging, the learning rate is correct.
+\item If \(L(\vec{W})\) is diverging, the learning rate is too large.
+\item If \(L(\vec{W})\) is converging slowly, the learning rate too small.
+\end{enumerate}
+Also, the algorithm needs feature scaling
+\[
+  x'_i = \frac{x_i - \min(\vec{X})}{\max(\vec{X}) - \min(\vec{X})}
+\]
+\subsubsection{Stochastic gradient descent}
+\label{sec:org1f9467f}
+Instead of inspecting the whole dataset to detect the direction which minimize \(L\), a
+single random sample is picked on each step.
+\begin{enumerate}
+\item Randomly shuffle the training set.
+\item Starting with random weights.
+\item For each sample \((\vec{X_i}, y_i)\): \(\>\vec{W} \leftarrow \vec{W} - r \cdot \Delta \Psi\)
+\item Repeat step 3 until \(\vec{W}\) doesn't change anymore \((10^{-5})\).
+\end{enumerate}
+Convergence is not so obvious. After each bulk of iterations, e.g. 1000, check \(L(\vec{W})\):
+\begin{enumerate}
+\item If \(L(\vec{W})\) is converging, the learning rate is correct.
+\item If \(L(\vec{W})\) is diverging, the learning rate is too large.
+\item If \(L(\vec{W})\) is converging slowly, the learning rate too small.
+\end{enumerate}
+\subsubsection{Mini batches}
+\label{sec:org49a42f0}
+While GD uses all samples in each iteration, SGD uses only one. A possible middle
+ground is to use a mini batch of samples in each iteration.
+\[
+  \vec{W} \leftarrow \vec{W} - r \cdot \frac{1}{b} \sum\limits_i^b \Delta \Psi
+\]
+Where \(b\) is the batch size, tipically \(10\).
+\subsubsection{Regularization}
+\label{sec:org34bfd39}
+To prevent large weights, the norm of the weights is added to the loss function:
+\[
+  L(\vec{W}) = |\vec{W}| + \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
+\]
+\subsubsection{Early stopping (cross validation)}
+\label{sec:orga9368c6}
+Other way to improve is to prevent overfitting:
+\begin{enumerate}
+\item Separate the data into training and validation sets.
+\item Minimize \(L(\vec{W})\) on the training set, stopping when \(L(\vec{W})\) on the validation set
+stops improving.
+\end{enumerate}
 \section{Reinforcement learning}
-\label{sec:org184596e}
+\label{sec:orgcd35180}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:org41c59ae}
+\label{sec:orgae4d9a1}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

@@ -27,11 +27,11 @@
    \end{align*}
    #+end_export
 ** Error function
-   The error function for a model $f: \vec{X} \mapsto y$ parameterized by $\vec{W}$ applied to a
+   The loss function for a model $f: \vec{X} \mapsto y$ parameterized by $\vec{W}$ applied to a
    dataset $\{ (\vec{X},\, y) \}$ of size $m$ is:
    #+begin_export latex
    \[
-     \min_{\vec{W}} \left[ L(\vec{W}) = \sum^m_i{ \big(f_{\vec{W}}(\vec{X}_i) - y_i \big)^2 } \right]
+     L(\vec{W}) = \sum^m_i{ \left(f_{\vec{W}}(\vec{X}_i) - y_i \right)^2 }
    \]
    #+end_export
 ** Perceptron
@@ -251,6 +251,76 @@
     1. Separate the data into training and validation sets.
     2. Minimize $L(\vec{W})$ on the training set, stopping when $L(\vec{W})$ on the validation set
        stops improving.
+** Multi layered neural networks
+   This approach introduces one or more hidden layers in the network, each with one or
+   more neurons. \\
+   The model for a hidden layer $h$ is the aggregation of the models of each neuron $i$ in
+   the layer.
+   #+begin_export latex
+   \[
+     y_{h,i} = \sigma \left( \vec{W}_i \, \vec{X}_h \right) \\
+   \]
+   #+end_export
+   The aggregation of the outputs of the layer defines the input for the neurons in the next layer
+   #+begin_export latex
+   \[
+     X_{h^+} = \left(1,\, y_{h, 1},\, \hdots,\, y_{h, i}\right)
+   \]
+   #+end_export
+   In practice, the layer's weights are aggregated in a matrix, performing the calculation
+   in a single take. \\
+   One implication is that the number of neurons in the hidden layers is directly
+   proportional to the model's complexity.
+*** Backpropagation
+    1. Starting with random weights.
+    2. For each sample, calculate the model, and if the result is incorrect:
+       a. Calculate /local gradients/ for each neuron. \\
+          For the neuron $l$ in the last layer $k$:
+          #+begin_export latex
+          \[
+            \delta_{k,l} = \sigma'\left( \vec{W}_l \, \vec{X}_k \right) \cdot (y - y_l)
+          \]
+          #+end_export
+          For the hidden neurons, let $i^+$ be the attached neuron in the next layer:
+          #+begin_export latex
+          \[
+            \delta_{h,i} = \sigma'\left( \vec{W}_i \, \vec{X}_h \right) \cdot \left( \delta_{h^+,i^+} \,\cdot\, w_{h^+,i^+} \right)
+          \]
+          #+end_export
+       b. Update the weights with the delta rule. \\
+          Let $w_{h,i,j}^+$ be the updated weight, $w_{h,i,j}$ the current weight, and
+          $w_{h,i,j}^-$ the previous weight:
+          #+begin_export latex
+          \[
+            w_{h,i,j}^+ = w_{h,i,j} + \gamma w_{h,i,j}^- + r \cdot \delta \cdot x_{h,i,j}
+          \]
+          #+end_export
+          Where $\gamma$ is the momentum, a constant defined to prevent local optima.
+** Support Vector Machines
+   The VC dimension of a model is the higher number of samples for which it can solve *any*
+   learning problem. \\
+   Therefore, the VC dimension is an estimate of the capacity of a model. \\
+
+   The VC dimension for a model $f$ and a training set of size $n$ is also a bound on the
+   test error
+   #+begin_export latex
+   \[
+     L_{\text{test}}(f) \leq L_{\text{train}}(f) + O\left(\sqrt{\frac{\text{VC}(f)}{n}}\right)
+   \]
+   #+end_export
+   To reduce the test error:
+   1. Keep the training error low.
+   2. Minimize $\text{VC}(f)$.
+   By limiting the data to a sphere, we can place a bound on the VC dimension. \\
+   Let $d$ be the dimensionality of the data, $D$ the diameter of the sphere, and
+   $\rho$ the margin of the model
+   #+begin_export latex
+   \[
+     \text{VC}(f) \leq \min\left( d, \left\lceil \frac{D^2}{\rho^2} \right\rceil \right)
+   \]
+   #+end_export
+   Therefore, by maximizing $\rho$, $\text{VC}(f)$ becomes *independent of the dimensionality of
+   the data*.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

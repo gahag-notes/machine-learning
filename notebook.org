@@ -61,12 +61,18 @@
    #+end_export
    This function is known and calculable.
    @@latex:\\[10pt]@@
-   The error function for a model $f$ in a *test* sample is
+   The error function for a model $f$ in a *hypothetical* sample is
    #+begin_export latex
-   \[ E_{\text{ou}t}(f) \]
+   \[ E_{\text{out}}(f) \]
    #+end_export
    This function is *not* known, and only *approachable*.
    @@latex:\\[10pt]@@
+   A good approximation of $E_{\text{out}}$(f) is the error in a *test* (or *validation*)
+   sample
+   #+begin_export latex
+   \[ E_{\text{val}}(f) \]
+   #+end_export
+   @@latex:\\@@
    Given a model $f$ in a set of $M$ models, the bound for the probability of the error
    deviation surpassing a given $\epsilon$ is
    #+begin_export latex
@@ -321,6 +327,19 @@
    #+end_export
    Therefore, by maximizing $\rho$, $\text{VC}(f)$ becomes *independent of the dimensionality of
    the data*.
+*** Kernels
+    A kernel allows one to map the entries to a higher dimensional feature space, possibly
+    allowing simpler ways to delimit such entries. \\
+    One example is the polynomial kernel:
+    #+begin_export latex
+    \[
+      \left(\vec{x} \cdot \vec{y}\right)^n
+    \]
+    #+end_export
+** Neural networks versus SVMs
+   1. Linear SVMs are similar to a Perceptron, but with an optimal cost function.
+   2. If a Kernel is used, then SVMs are comparable to 2-layer neural networks.
+   3. A 3-layer neural network might correspond to an ensemble of multiple Kernel SVMs.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

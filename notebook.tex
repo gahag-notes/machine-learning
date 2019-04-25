@@ -1,4 +1,4 @@
-% Created 2019-04-15 Mon 18:59
+% Created 2019-04-25 Thu 18:11
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -30,40 +30,40 @@
  pdftitle={},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 26.2 (Org mode 9.2.2)}, 
+ pdfcreator={Emacs 26.2 (Org mode 9.2.3)}, 
  pdflang={English}}
 \begin{document}
 
 
 \section{Supervised learning}
-\label{sec:orgbb2bbd4}
+\label{sec:org4099b58}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:org541beb4}
+\label{sec:org92b0e04}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:orgea17a01}
+\label{sec:org90f5c90}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:orgb6e8e28}
+\label{sec:orgc985695}
 The training set is a set of \(m\) \((\vec{X},\, y)\) pairs, where:
 \begin{align*}
   \vec{X} \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orgeca5902}
+\label{sec:org696de52}
 The loss function for a model \(f: \vec{X} \mapsto y\) parameterized by \(\vec{W}\) applied to a
 dataset \(\{ (\vec{X},\, y) \}\) of size \(m\) is:
 \[
   L(\vec{W}) = \sum^m_i{ \left(f_{\vec{W}}(\vec{X}_i) - y_i \right)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org78a458b}
+\label{sec:org1899cc1}
 Perceptron is the trivial neural network. The model for a parameter \(\vec{W} = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -73,7 +73,7 @@ Where \(\sign\) is the activation function. \\
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:orga2bbed2}
+\label{sec:org2a4d4a7}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
     1]\) is used to scale each step. the For a training set \(S = \{ \, (\vec{X}_1,\, y_1),\enspace (\vec{X}_2,\,
     y_2),\enspace \hdots \, \}\)
@@ -85,15 +85,19 @@ The learning algorithm of the Perceptron is quite simple. The learning rate \(\i
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:orgccb9ce5}
+\label{sec:orgfeecb84}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable.
 \\[10pt]
-The error function for a model \(f\) in a \textbf{test} sample is
-\[ E_{\text{ou}t}(f) \]
+The error function for a model \(f\) in a \textbf{hypothetical} sample is
+\[ E_{\text{out}}(f) \]
 This function is \textbf{not} known, and only \textbf{approachable}.
 \\[10pt]
+A good approximation of \(E_{\text{out}}\)(f) is the error in a \textbf{test} (or \textbf{validation})
+sample
+\[ E_{\text{val}}(f) \]
+
 Given a model \(f\) in a set of \(M\) models, the bound for the probability of the error
 deviation surpassing a given \(\epsilon\) is
 \[
@@ -101,11 +105,11 @@ deviation surpassing a given \(\epsilon\) is
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \subsubsection{Empirical error minimization}
-\label{sec:orga52b6ee}
+\label{sec:orgdf5f8ce}
 During the learning algorithm, always conserve the weights that produce the lower error. \\
 This has a disadvantage: It memorizes the training set.
 \subsection{Ensemble learning}
-\label{sec:orgeb6e7e7}
+\label{sec:org2909c9b}
 Ensemble learning consists in combining several simple models to form a more complex
 model.
 \begin{description}
@@ -114,7 +118,7 @@ model.
 others
 \end{description}
 \subsection{Learning decision trees}
-\label{sec:org8b352ec}
+\label{sec:orgb7a4981}
 Each layer in the tree consists of an attribute that splits the data into subsets that
 are ideally disjoint. \\
 The entropy of the subsets produced is a measure of how disjoint they are.
@@ -135,7 +139,7 @@ The information gain, i.e. the reduction in entropy for \(A\), is
   I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
 \]
 \subsection{Capacity}
-\label{sec:org1a9380a}
+\label{sec:orga743efd}
 The capacity is a measure of when the training error is a good approximation for the
 test error.
 \begin{figure}[H]
@@ -192,7 +196,7 @@ test error.
   \end{tikzpicture}
 \end{figure}
 \subsection{Bias and variance}
-\label{sec:org939c1eb}
+\label{sec:org41d0f98}
 \textbf{Bias} is the error due to the fact that the set of functions does not contain the
 target function.
 \\[5pt]
@@ -202,7 +206,7 @@ drawn from the same distribution, we would have obtained another function.
 \textbf{Regularization} is a method for minimizing the training error, as long as it is still a
 good approximation for the test error, trading-off accuracy for simplicity.
 \subsection{Single layer neural networks}
-\label{sec:orge14846c}
+\label{sec:org4376384}
 Using the sigmoid as the activation function, and the squared-error loss function:
 \[
   L(\vec{W}) = \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
@@ -221,7 +225,7 @@ And the slope of ligistic is
 \]
 \newpage
 \subsubsection{Gradient descent algorithm}
-\label{sec:org8ae0b7d}
+\label{sec:org0d8ea25}
 The learning rate \(r \in (0,\, 1]\) is used to scale each step.
 \begin{enumerate}
 \item Starting with random weights.
@@ -240,7 +244,7 @@ Also, the algorithm needs feature scaling
   x'_i = \frac{x_i - \min(\vec{X})}{\max(\vec{X}) - \min(\vec{X})}
 \]
 \subsubsection{Stochastic gradient descent}
-\label{sec:org1639199}
+\label{sec:org8707836}
 Instead of inspecting the whole dataset to detect the direction which minimize \(L\), a
 single random sample is picked on each step.
 \begin{enumerate}
@@ -256,7 +260,7 @@ Convergence is not so obvious. After each bulk of iterations, e.g. 1000, check \
 \item If \(L(\vec{W})\) is converging slowly, the learning rate too small.
 \end{enumerate}
 \subsubsection{Mini batches}
-\label{sec:org2a467e2}
+\label{sec:org16b29ef}
 While GD uses all samples in each iteration, SGD uses only one. A possible middle
 ground is to use a mini batch of samples in each iteration.
 \[
@@ -264,13 +268,13 @@ ground is to use a mini batch of samples in each iteration.
 \]
 Where \(b\) is the batch size, tipically \(10\).
 \subsubsection{Regularization}
-\label{sec:orgfb1574a}
+\label{sec:org891d4da}
 To prevent large weights, the norm of the weights is added to the loss function:
 \[
   L(\vec{W}) = |\vec{W}| + \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
 \]
 \subsubsection{Early stopping (cross validation)}
-\label{sec:orgb2bf70f}
+\label{sec:org8dc7f2a}
 Other way to improve is to prevent overfitting:
 \begin{enumerate}
 \item Separate the data into training and validation sets.
@@ -278,7 +282,7 @@ Other way to improve is to prevent overfitting:
 stops improving.
 \end{enumerate}
 \subsection{Multi layered neural networks}
-\label{sec:org94ab32a}
+\label{sec:org5ab82d8}
 This approach introduces one or more hidden layers in the network, each with one or
 more neurons. \\
 The model for a hidden layer \(h\) is the aggregation of the models of each neuron \(i\) in
@@ -295,13 +299,12 @@ in a single take. \\
 One implication is that the number of neurons in the hidden layers is directly
 proportional to the model's complexity.
 \subsubsection{Backpropagation}
-\label{sec:org83d8286}
+\label{sec:orgbc1f0b8}
 \begin{enumerate}
 \item Starting with random weights.
 \item For each sample, calculate the model, and if the result is incorrect:
-\begin{enumerate}
-\item Calculate \emph{local gradients} for each neuron. \\
-For the neuron \(l\) in the last layer \(k\):
+a. Calculate \emph{local gradients} for each neuron. \\
+   For the neuron \(l\) in the last layer \(k\):
 \[
   \delta_{k,l} = \sigma'\left( \vec{W}_l \, \vec{X}_k \right) \cdot (y - y_l)
 \]
@@ -309,6 +312,7 @@ For the hidden neurons, let \(i^+\) be the attached neuron in the next layer:
 \[
   \delta_{h,i} = \sigma'\left( \vec{W}_i \, \vec{X}_h \right) \cdot \left( \delta_{h^+,i^+} \,\cdot\, w_{h^+,i^+} \right)
 \]
+\begin{enumerate}
 \item Update the weights with the delta rule. \\
 Let \(w_{h,i,j}^+\) be the updated weight, \(w_{h,i,j}\) the current weight, and
 \(w_{h,i,j}^-\) the previous weight:
@@ -319,7 +323,7 @@ Where \(\gamma\) is the momentum, a constant defined to prevent local optima.
 \end{enumerate}
 \end{enumerate}
 \subsection{Support Vector Machines}
-\label{sec:org02c96fa}
+\label{sec:orgc76a3a2}
 The VC dimension of a model is the higher number of samples for which it can solve \textbf{any}
 learning problem. \\
 Therefore, the VC dimension is an estimate of the capacity of a model. \\
@@ -342,12 +346,27 @@ Let \(d\) be the dimensionality of the data, \(D\) the diameter of the sphere, a
 \]
 Therefore, by maximizing \(\rho\), \(\text{VC}(f)\) becomes \textbf{independent of the dimensionality of
 the data}.
+\subsubsection{Kernels}
+\label{sec:orgecde448}
+A kernel allows one to map the entries to a higher dimensional feature space, possibly
+allowing simpler ways to delimit such entries. \\
+One example is the polynomial kernel:
+\[
+  \left(\vec{x} \cdot \vec{y}\right)^n
+\]
+\subsection{Neural networks versus SVMs}
+\label{sec:org2ad0347}
+\begin{enumerate}
+\item Linear SVMs are similar to a Perceptron, but with an optimal cost function.
+\item If a Kernel is used, then SVMs are comparable to 2-layer neural networks.
+\item A 3-layer neural network might correspond to an ensemble of multiple Kernel SVMs.
+\end{enumerate}
 \section{Reinforcement learning}
-\label{sec:org5494818}
+\label{sec:org276570b}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \section{Unsupervised learning}
-\label{sec:org29260a2}
+\label{sec:orgc761bf8}
 Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.
 \end{document}

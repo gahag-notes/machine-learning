@@ -340,6 +340,14 @@
    1. Linear SVMs are similar to a Perceptron, but with an optimal cost function.
    2. If a Kernel is used, then SVMs are comparable to 2-layer neural networks.
    3. A 3-layer neural network might correspond to an ensemble of multiple Kernel SVMs.
+** Naive Bayes
+   Assuming conditional independence between the input dimensions, the probability of the
+   target can be approximated using the Bayes theorem:
+   #+begin_export latex
+   \[
+     P\big(y \>|\> x_1, \hdots, x_d \big) \approx P(y) \cdot \prod_{i}^{d} P\big( x_i \>|\> y \big)
+   \]
+   #+end_export
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

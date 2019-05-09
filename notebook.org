@@ -1,5 +1,6 @@
 # -*- after-save-hook: org-latex-export-to-pdf; -*-
 #+latex_header: \usepackage[margin=2cm]{geometry}
+#+latex_header: \usepackage{enumitem}
 #+latex_header: \DeclareMathOperator{\sign}{sign}
 #+latex_header: \setlength{\parindent}{0cm}
 #+latex_header: \usepackage{pgfplots}
@@ -49,6 +50,7 @@
     The learning algorithm of the Perceptron is quite simple. The learning rate $\in (0,\,
     1]$ is used to scale each step. the For a training set $S = \{ \, (\vec{X}_1,\, y_1),\enspace (\vec{X}_2,\,
     y_2),\enspace \hdots \, \}$
+    #+attr_latex: :options [itemsep=0pt]
     - Starting with random weights, then show each sample in sequence repetitively.
     - If the output is correct, do nothing.
     - If the produced output is negative, and the correct output is positive, increase the weights.
@@ -84,12 +86,6 @@
 *** Empirical error minimization
     During the learning algorithm, always conserve the weights that produce the lower error. \\
     This has a disadvantage: It memorizes the training set.
-** Ensemble learning
-   Ensemble learning consists in combining several simple models to form a more complex
-   model.
-   - Bagging: :: Each model training with a different dataset
-   - Boosting: :: Same dataset, but instrumented for each model to mitigate the weakness of
-                 others
 ** Learning decision trees
    Each layer in the tree consists of an attribute that splits the data into subsets that
    are ideally disjoint. \\
@@ -254,6 +250,7 @@
     #+end_export
 *** Early stopping (cross validation)
     Other way to improve is to prevent overfitting:
+    #+attr_latex: :options [itemsep=0pt]
     1. Separate the data into training and validation sets.
     2. Minimize $L(\vec{W})$ on the training set, stopping when $L(\vec{W})$ on the validation set
        stops improving.
@@ -315,6 +312,7 @@
    \]
    #+end_export
    To reduce the test error:
+   #+attr_latex: :options [itemsep=0pt]
    1. Keep the training error low.
    2. Minimize $\text{VC}(f)$.
    By limiting the data to a sphere, we can place a bound on the VC dimension. \\
@@ -337,6 +335,7 @@
     \]
     #+end_export
 ** Neural networks versus SVMs
+   #+attr_latex: :options [itemsep=0pt]
    1. Linear SVMs are similar to a Perceptron, but with an optimal cost function.
    2. If a Kernel is used, then SVMs are comparable to 2-layer neural networks.
    3. A 3-layer neural network might correspond to an ensemble of multiple Kernel SVMs.
@@ -349,6 +348,12 @@
    \]
    #+end_export
    @@latex:\newpage@@
+** Ensemble learning
+   Ensemble learning consists in combining several simple models to form a more complex
+   model.
+   - Bagging: :: Each model training with a different dataset
+   - Boosting: :: Same dataset, but instrumented for each model to mitigate the weakness of
+                 others
 ** Boosting
    Boosting is the technique of combining simple models iteratively to create a complex
    model. \\
@@ -386,6 +391,7 @@
    *Small* subsets *prevent* the base models from *overfitting*, and therefore bagging
    circumvents *variance* in the data. @@latex:\\@@ \\
    The models may be combined using many techniques:
+   #+attr_latex: :options [itemsep=0pt]
    - Majority voting.
    - Averaging probabilites.
    - Averaging estimates.
@@ -398,6 +404,7 @@
     @@latex:\newpage@@
 * Unsupervised learning
   Unsupervised learning consists to, given only inputs as training, find a pattern:
+  #+attr_latex: :options [itemsep=0pt]
   - Clusters
   - Manifolds
   - Embeddings

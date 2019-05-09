@@ -350,8 +350,10 @@
    #+end_export
    @@latex:\newpage@@
 ** Boosting
-   Boosting is the technique of combining simple models to create a complex model. \\
-   @@latex:\\@@
+   Boosting is the technique of combining simple models iteratively to create a complex
+   model. \\
+   Each model is intentionally *biased* to avoid the errors of the previous model.
+   @@latex:\\@@ \\
    One simple method of boosting is the *additive boosting*: \\
    Considering binary classifiers
    #+begin_export latex
@@ -376,9 +378,42 @@
     The adaboost algorithm is *always based on very simple models*, usually decision
     stumps. \\
     As a consequence, it *does not overfit*.
+** Bagging
+   Boostrap aggregation is the technique of combining models trained in subsets of the
+   training dataset. \\
+   The subsets are constructed by uniformly sampling the dataset, and may contain
+   intersections. \\
+   *Small* subsets *prevent* the base models from *overfitting*, and therefore bagging
+   circumvents *variance* in the data. @@latex:\\@@ \\
+   The models may be combined using many techniques:
+   - Majority voting.
+   - Averaging probabilites.
+   - Averaging estimates.
+   - Etc.
+   In practice, the base models are usually decision trees.
+*** Random forests
+    Random forests exploits randomness in instances and features. \\
+    Each decision tree is trained with a random subset of *features* and instances. @@latex:\\@@
+    As a consequence, random forests circumvent overfitting in decision trees.
+    @@latex:\newpage@@
+* Unsupervised learning
+  Unsupervised learning consists to, given only inputs as training, find a pattern:
+  - Clusters
+  - Manifolds
+  - Embeddings
+  - Etc.
+** Distance function
+   Some common distance functions are:
+   - Nearest neighbor: :: $\min({|x - y|}^2)$
+   - Furthest neighbor: :: $\max({|x - y|}^2)$
+   - Centroid: :: ${|\mu_i - \mu_j|}^2$
+** Hierarchical agglomerative clustering
+   The hierarchical agglomerative clustering technique constructs a dendogram based on a
+   distance function. \\
+   Starting with individual clusters, it iteratively merges the closest ones until the
+   dendogram is complete. Finally, a cut across the dendogram corresponds to a similarity
+   threshold.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach
   animals.
-* Unsupervised learning
-  Given only inputs as training, find a pattern: discover clusters, manifolds, embedding.

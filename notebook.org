@@ -420,6 +420,45 @@
    Starting with individual clusters, it iteratively merges the closest ones until the
    dendogram is complete. Finally, a cut across the dendogram corresponds to a similarity
    threshold.
+** K-Means
+   The K-Means algorithm constructs clusters by placing centroids and agglomerating by the
+   closest centroid. \\
+   Considering $k$ clusters, place $k$ centroids in the space. Update the centroids
+   iteratively using an expectation-maximization algorithm:
+   #+attr_latex: :options [itemsep=0pt]
+   - Each cluster is defined by the points that are closest to the correspondent centroid.
+   - The centroids are updated with the mean of the points in it's cluster.
+   This technique can be interpreted as optimizing a loss function
+   #+begin_export latex
+   \[
+     L = \sum_i \left| x_i - \mu_j \right|^2
+   \]
+   #+end_export
+   Different initial centroids may lead to different final losses, motivating different
+   initialization methods:
+   #+attr_latex: :options [itemsep=0pt]
+   - Random: :: May choose nearby points
+   - Distance based: :: Limits the search space, not enough randomness.
+   - Random and distance based: :: Choose far points randomly.
+   The choice of $k$ also impacts the disposition of results:
+   #+attr_latex: :options [itemsep=0pt]
+   - Small $k$: :: loose clustering.
+   - Large $k$: :: any point is a group itself.
+   To prevent an overly large $k$, we must penalize complexity (regularization):
+   #+begin_export latex
+   \[
+     L = \log \left( \frac{1}{n \cdot d} \cdot \sum_i \left| x_i - \mu_j \right|^2 \right) + k \cdot \frac{\log{n}}{n}
+   \]
+   #+end_export
+   Where $d$ is the dimensionality of the data, which also plays a fundamental role. With
+   more dimensions, points tend to get sparse. Therefore, the more dimensions there are,
+   the more samples one will need.
+** Mixture model
+   The mixture model constructs clusters by assigning probabily distributions and
+   agglomerating by the most probable distribution. Therefore, it differs from K-Means by
+   allowing overlaping clusters. \\
+   As in the K-Means algorithm, the distributions are randomly initialized, and updated
+   using an expectation-maximization algorithm.
 * Reinforcement learning
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach

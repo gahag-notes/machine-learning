@@ -401,7 +401,27 @@
     Random forests exploits randomness in instances and features. \\
     Each decision tree is trained with a random subset of *features* and instances. @@latex:\\@@
     As a consequence, random forests circumvent overfitting in decision trees.
-    @@latex:\newpage@@
+** Semi-supervised learning
+   Semi-supervised learning is the method of combining supervised and unsupervised
+   learning, usually when there are small ammounts of labeled data, and large amounts of
+   unlabeled data.
+*** Active learning
+    Active learning is a technique to create optimal training sets, by filtering samples
+    with redundant information. @@latex:\\@@ \\
+    The technique is commonly used in two situations:
+    #+attr_latex: :options [itemsep=0pt]
+    - Semi-supervised: :: use active learning to obtain a small optimal subset of samples
+         to label manually.
+    - Supervised: :: use active learning to balance classes, e.g. for classifying
+                     anomalies, where there are few positive samples.
+    @@latex:\vspace{5px}@@  There are many methods for selecting samples:
+    - Uncertainty sampling: :: Select the samples for which the model is least certain
+         about the correct output.
+    - Committee: :: Train a comittee of models on the labeled data. Select the unlabeled
+                    samples for which the committee disagrees most.
+    - Expected model change: :: Select the samples with greater impact on the model.
+    - Expected error reduction: :: Select the samples with greater impact on the model's
+         generalization error.
 * Unsupervised learning
   Unsupervised learning consists to, given only inputs as training, find a pattern:
   #+attr_latex: :options [itemsep=0pt]

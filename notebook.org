@@ -483,3 +483,24 @@
   Method where you train the program by rewarding the learning algorithm positively or
   negatively according to the produced results. This method is similar to how we teach
   animals.
+  @@latex:\pagebreak@@
+* Deep learning
+  Deep learning is suitable for problems where the features are not well defined:
+  #+attr_latex: :options [itemsep=0pt]
+  - Images
+  - Text
+  - Audio
+** Convolutional neural networks
+   Convolutional neural networks are composed of two sets of layers:
+   #+attr_latex: :options [itemsep=0pt]
+   1. Alternate layers of:
+      + Convolution: :: A mathematical method to identify correlation, extracting features
+                        from the input.
+      + Pooling: :: A method to reduce dimensionality without loosing information.
+                    @@latex:\vspace{3pt}@@
+   2. A multilayer perceptron, i.e. a neural network.
+   The convolution step is parameterized by:
+   #+attr_latex: :options [itemsep=0pt]
+   - Depth: :: the number of filters
+   - Stride: :: the slide step
+   - Zero-padding: :: whether to add padding to allow patterns in the borders.

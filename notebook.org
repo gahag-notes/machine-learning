@@ -61,20 +61,20 @@
    #+begin_export latex
    \[ E_{\text{in}}(f) \]
    #+end_export
-   This function is known and calculable.
-   @@latex:\\[10pt]@@
+   This function is known and calculable. \\
+
    The error function for a model $f$ in a *hypothetical* sample is
    #+begin_export latex
    \[ E_{\text{out}}(f) \]
    #+end_export
-   This function is *not* known, and only *approachable*.
-   @@latex:\\[10pt]@@
+   This function is *not* known, and only *approachable*. \\
+
    A good approximation of $E_{\text{out}}$(f) is the error in a *test* (or *validation*)
    sample
    #+begin_export latex
    \[ E_{\text{val}}(f) \]
    #+end_export
-   @@latex:\\@@
+
    Given a model $f$ in a set of $M$ models, the bound for the probability of the error
    deviation surpassing a given $\epsilon$ is
    #+begin_export latex
@@ -89,12 +89,12 @@
 ** Learning decision trees
    Each layer in the tree consists of an attribute that splits the data into subsets that
    are ideally disjoint. \\
-   The entropy of the subsets produced is a measure of how disjoint they are.
-   @@latex:\\[5pt]@@
+   The entropy of the subsets produced is a measure of how disjoint they are. \\
+
    For a set containing $p$ positive and $n$ negatives, the entropy is
    #+begin_export latex
    \[
-     H\left(\frac{p}{p+n}, \frac{n}{p+n} \right) = - \frac{p}{p + n} \log\left( \frac{p}{p + n} \right) 
+     H\left(\frac{p}{p+n}, \frac{n}{p+n} \right) = - \frac{p}{p + n} \log\left( \frac{p}{p + n} \right)
                                                    - \frac{n}{p + n}\log\left( \frac{n}{p + n} \right)
    \]
    #+end_export
@@ -172,11 +172,11 @@
    #+end_export
 ** Bias and variance
    *Bias* is the error due to the fact that the set of functions does not contain the
-   target function.
-   @@latex:\\[5pt]@@
+   target function. \\
+
    *Variance* is the error due to the fact that if we had been using another training set
-   drawn from the same distribution, we would have obtained another function.
-   @@latex:\\[5pt]@@
+   drawn from the same distribution, we would have obtained another function. \\
+
    *Regularization* is a method for minimizing the training error, as long as it is still a
    good approximation for the test error, trading-off accuracy for simplicity.
 ** Single layer neural networks
@@ -357,8 +357,8 @@
 ** Boosting
    Boosting is the technique of combining simple models iteratively to create a complex
    model. \\
-   Each model is intentionally *biased* to avoid the errors of the previous model.
-   @@latex:\\@@ \\
+   Each model is intentionally *biased* to avoid the errors of the previous model. \\
+
    One simple method of boosting is the *additive boosting*: \\
    Considering binary classifiers
    #+begin_export latex
@@ -389,7 +389,8 @@
    The subsets are constructed by uniformly sampling the dataset, and may contain
    intersections. \\
    *Small* subsets *prevent* the base models from *overfitting*, and therefore bagging
-   circumvents *variance* in the data. @@latex:\\@@ \\
+   circumvents *variance* in the data. \\
+
    The models may be combined using many techniques:
    #+attr_latex: :options [itemsep=0pt]
    - Majority voting.
@@ -399,7 +400,7 @@
    In practice, the base models are usually decision trees.
 *** Random forests
     Random forests exploits randomness in instances and features. \\
-    Each decision tree is trained with a random subset of *features* and instances. @@latex:\\@@
+    Each decision tree is trained with a random subset of *features* and instances. \\
     As a consequence, random forests circumvent overfitting in decision trees.
 ** Semi-supervised learning
    Semi-supervised learning is the method of combining supervised and unsupervised
@@ -407,7 +408,8 @@
    unlabeled data.
 *** Active learning
     Active learning is a technique to create optimal training sets, by filtering samples
-    with redundant information. @@latex:\\@@ \\
+    with redundant information. \\
+
     The technique is commonly used in two situations:
     #+attr_latex: :options [itemsep=0pt]
     - Semi-supervised: :: use active learning to obtain a small optimal subset of samples
@@ -504,3 +506,27 @@
    - Depth: :: the number of filters
    - Stride: :: the slide step
    - Zero-padding: :: whether to add padding to allow patterns in the borders.
+** Natural language processing
+   As in convolutional networks, the key technique is how to extract features from the
+   input. \\
+   To learn how to represent data, a network composed of two sets of layers is used to
+   predict the next word in the text:
+   #+attr_latex: :options [itemsep=0pt]
+   1. The input layer.
+   2. A multilayer perceptron, i.e. a neural network.
+   For training, each word in the vocabulary is initally modeled as a random vector. \\
+
+   By allowing training of the input layer itself, the network *learns* how to
+   significantly model the inputs for the given dataset. Therefore, after training, the
+   network has not only produced the prediction model, but also a feature model in the
+   first layer. This feature model can be used as input layer for any other network,
+   including networks with other targets.
+** Unsupervised feature learning
+*** Autoencoder
+    The autoencoder is a neural network with one hidden layer that implements a lossy
+    compression machine. By compressing and decompressing the input, it removes irrelevant
+    data due to the loss. Such network can be trained as it was supervised, as the
+    expected output is the input itself. \\
+
+    Because the hidden layer has a smaller dimension than the input, it can be used with
+    the input layer as a feature model that reduces the dimensionality.

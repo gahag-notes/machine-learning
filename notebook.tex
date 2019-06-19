@@ -1,4 +1,4 @@
-% Created 2019-06-07 Fri 17:25
+% Created 2019-06-19 Wed 11:05
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -17,6 +17,7 @@
 \usepackage{minted}
 \usepackage[margin=2cm]{geometry}
 \usepackage{enumitem}
+\usepackage{svg}
 \DeclareMathOperator{\sign}{sign}
 \setlength{\parindent}{0cm}
 \usepackage{pgfplots}
@@ -37,34 +38,34 @@
 
 
 \section{Supervised learning}
-\label{sec:orgb4b382f}
+\label{sec:org2e4a623}
 Method where you train the program by feeding the learning algorithm with a mapping of
 inputs to correct outputs.
 \subsection{Regression}
-\label{sec:orgc6392a4}
+\label{sec:org53aa172}
 Regression is curve fitting: learn a continuous input \(\to\) output mapping from a set of
 examples.
 \subsection{Classification}
-\label{sec:org06bf318}
+\label{sec:org436b11d}
 Outputs are discrete variables (category labels). Learn a decision boundary that
 separates one class from the other. Generally, a confidence is also desired, i.e.,
 how sure are we that the input belongs to the chosen category.
 \subsection{Training set}
-\label{sec:org0d4c536}
+\label{sec:orgcb2c4ad}
 The training set is a set of \(m\) \((\vec{X},\, y)\) pairs, where:
 \begin{align*}
   \vec{X} \in \mathbb{R}^d & \quad\text{models the input.} \\
   y \in \{0, 1\} & \quad\text{models the output.}
 \end{align*}
 \subsection{Error function}
-\label{sec:orga0a6c5e}
+\label{sec:orgc44b132}
 The loss function for a model \(f: \vec{X} \mapsto y\) parameterized by \(\vec{W}\) applied to a
 dataset \(\{ (\vec{X},\, y) \}\) of size \(m\) is:
 \[
   L(\vec{W}) = \sum^m_i{ \left(f_{\vec{W}}(\vec{X}_i) - y_i \right)^2 }
 \]
 \subsection{Perceptron}
-\label{sec:org8216ac9}
+\label{sec:org74550ff}
 Perceptron is the trivial neural network. The model for a parameter \(\vec{W} = (\text{threshold},\,
    w_1,\, \hdots,\, w_d)\) and inputs of the form \((1,\, x_1,\, \hdots,\, x_d)\) is given by
 \[
@@ -74,7 +75,7 @@ Where \(\sign\) is the activation function. \\
 If \(x_i\) is evidence for approval, then \(w_i\) should be high. \\
 If \(x_i\) is evidence for denial, then \(w_i\) should be low.
 \subsubsection{Learning algorithm}
-\label{sec:org9cafc83}
+\label{sec:org68a43e9}
 The learning algorithm of the Perceptron is quite simple. The learning rate \(\in (0,\,
     1]\) is used to scale each step. the For a training set \(S = \{ \, (\vec{X}_1,\, y_1),\enspace (\vec{X}_2,\,
     y_2),\enspace \hdots \, \}\)
@@ -86,7 +87,7 @@ The learning algorithm of the Perceptron is quite simple. The learning rate \(\i
 \item The amount to increase/decrease is given by the current sample scaled by the learning rate.
 \end{itemize}
 \subsection{Error}
-\label{sec:orgea9651b}
+\label{sec:org96cd118}
 The error function for a model \(f\) in a \textbf{training} sample is
 \[ E_{\text{in}}(f) \]
 This function is known and calculable. \\
@@ -106,11 +107,11 @@ deviation surpassing a given \(\epsilon\) is
 \]
 Notably, \(E_{\text{in}}(f)\) and \(E_{\text{out}}(f)\) deviates as \(f\) becomes complex.
 \subsubsection{Empirical error minimization}
-\label{sec:org9114010}
+\label{sec:orgc8c3720}
 During the learning algorithm, always conserve the weights that produce the lower error. \\
 This has a disadvantage: It memorizes the training set.
 \subsection{Learning decision trees}
-\label{sec:orgc3fc698}
+\label{sec:org048ac65}
 Each layer in the tree consists of an attribute that splits the data into subsets that
 are ideally disjoint. \\
 The entropy of the subsets produced is a measure of how disjoint they are. \\
@@ -131,7 +132,7 @@ The information gain, i.e. the reduction in entropy for \(A\), is
   I(A) = H\left( \frac{p}{p + n}, \frac{n}{p + n} \right) - EH(A)
 \]
 \subsection{Capacity}
-\label{sec:orgd21e9eb}
+\label{sec:org9c53397}
 The capacity is a measure of when the training error is a good approximation for the
 test error.
 \begin{figure}[H]
@@ -188,7 +189,7 @@ test error.
   \end{tikzpicture}
 \end{figure}
 \subsection{Bias and variance}
-\label{sec:org5b5c5e1}
+\label{sec:org1c6a278}
 \textbf{Bias} is the error due to the fact that the set of functions does not contain the
 target function. \\
 
@@ -198,7 +199,7 @@ drawn from the same distribution, we would have obtained another function. \\
 \textbf{Regularization} is a method for minimizing the training error, as long as it is still a
 good approximation for the test error, trading-off accuracy for simplicity.
 \subsection{Single layer neural networks}
-\label{sec:org5273be9}
+\label{sec:org09af160}
 Using the sigmoid as the activation function, and the squared-error loss function:
 \[
   L(\vec{W}) = \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
@@ -217,7 +218,7 @@ And the slope of ligistic is
 \]
 \newpage
 \subsubsection{Gradient descent algorithm}
-\label{sec:org856651e}
+\label{sec:org91bc2e9}
 The learning rate \(r \in (0,\, 1]\) is used to scale each step.
 \begin{enumerate}
 \item Starting with random weights.
@@ -236,7 +237,7 @@ Also, the algorithm needs feature scaling
   x'_i = \frac{x_i - \min(\vec{X})}{\max(\vec{X}) - \min(\vec{X})}
 \]
 \subsubsection{Stochastic gradient descent}
-\label{sec:org6894a22}
+\label{sec:orgaf49930}
 Instead of inspecting the whole dataset to detect the direction which minimize \(L\), a
 single random sample is picked on each step.
 \begin{enumerate}
@@ -252,7 +253,7 @@ Convergence is not so obvious. After each bulk of iterations, e.g. 1000, check \
 \item If \(L(\vec{W})\) is converging slowly, the learning rate too small.
 \end{enumerate}
 \subsubsection{Mini batches}
-\label{sec:org58ed338}
+\label{sec:org055a479}
 While GD uses all samples in each iteration, SGD uses only one. A possible middle
 ground is to use a mini batch of samples in each iteration.
 \[
@@ -260,13 +261,13 @@ ground is to use a mini batch of samples in each iteration.
 \]
 Where \(b\) is the batch size, tipically \(10\).
 \subsubsection{Regularization}
-\label{sec:orgd99b174}
+\label{sec:orgf46dbdc}
 To prevent large weights, the norm of the weights is added to the loss function:
 \[
   L(\vec{W}) = |\vec{W}| + \frac{1}{2} \sum_i^m \left( \sigma\left(\vec{W} \vec{X}_i\right) - y_i \right)^2
 \]
 \subsubsection{Early stopping (cross validation)}
-\label{sec:orge0dddc4}
+\label{sec:orgf13c9c6}
 Other way to improve is to prevent overfitting:
 \begin{enumerate}[itemsep=0pt]
 \item Separate the data into training and validation sets.
@@ -274,7 +275,7 @@ Other way to improve is to prevent overfitting:
 stops improving.
 \end{enumerate}
 \subsection{Multi layered neural networks}
-\label{sec:org79c8e9e}
+\label{sec:org4456326}
 This approach introduces one or more hidden layers in the network, each with one or
 more neurons. \\
 The model for a hidden layer \(h\) is the aggregation of the models of each neuron \(i\) in
@@ -291,7 +292,7 @@ in a single take. \\
 One implication is that the number of neurons in the hidden layers is directly
 proportional to the model's complexity.
 \subsubsection{Backpropagation}
-\label{sec:org7a50831}
+\label{sec:org57b7614}
 \begin{enumerate}
 \item Starting with random weights.
 \item For each sample, calculate the model, and if the result is incorrect:
@@ -315,7 +316,7 @@ Where \(\gamma\) is the momentum, a constant defined to prevent local optima.
 \end{enumerate}
 \end{enumerate}
 \subsection{Support Vector Machines}
-\label{sec:org4b4f131}
+\label{sec:orgce0fb4a}
 The VC dimension of a model is the higher number of samples for which it can solve \textbf{any}
 learning problem. \\
 Therefore, the VC dimension is an estimate of the capacity of a model. \\
@@ -339,7 +340,7 @@ Let \(d\) be the dimensionality of the data, \(D\) the diameter of the sphere, a
 Therefore, by maximizing \(\rho\), \(\text{VC}(f)\) becomes \textbf{independent of the dimensionality of
 the data}.
 \subsubsection{Kernels}
-\label{sec:orgf3a6593}
+\label{sec:org38da101}
 A kernel allows one to map the entries to a higher dimensional feature space, possibly
 allowing simpler ways to delimit such entries. \\
 One example is the polynomial kernel:
@@ -347,14 +348,14 @@ One example is the polynomial kernel:
   \left(\vec{x} \cdot \vec{y}\right)^n
 \]
 \subsection{Neural networks versus SVMs}
-\label{sec:org53f231c}
+\label{sec:orgfdcc25d}
 \begin{enumerate}[itemsep=0pt]
 \item Linear SVMs are similar to a Perceptron, but with an optimal cost function.
 \item If a Kernel is used, then SVMs are comparable to 2-layer neural networks.
 \item A 3-layer neural network might correspond to an ensemble of multiple Kernel SVMs.
 \end{enumerate}
 \subsection{Naive Bayes}
-\label{sec:orgbd188b3}
+\label{sec:orga6c47ee}
 Assuming conditional independence between the input dimensions, the probability of the
 target can be approximated using the Bayes theorem:
 \[
@@ -362,7 +363,7 @@ target can be approximated using the Bayes theorem:
 \]
 \newpage
 \subsection{Ensemble learning}
-\label{sec:orgf7e19cc}
+\label{sec:org947a61d}
 Ensemble learning consists in combining several simple models to form a more complex
 model.
 \begin{description}
@@ -371,7 +372,7 @@ model.
 others
 \end{description}
 \subsection{Boosting}
-\label{sec:orgdd049ff}
+\label{sec:org102a1da}
 Boosting is the technique of combining simple models iteratively to create a complex
 model. \\
 Each model is intentionally \textbf{biased} to avoid the errors of the previous model. \\
@@ -387,7 +388,7 @@ The model is defined as
 h(\vec{X}) = \sign\big(h_1(\vec{X}) + \hdots + h_n(\vec{X})\big)
 \]
 \subsubsection{Adaboost}
-\label{sec:org7405ec3}
+\label{sec:org63722a9}
 The adaptive boosting algorithm is an additive algorithm, with associated importances:
 \[
   h(X) = \sign\big(\alpha_1 \cdot h_1(X) + \hdots + \alpha_n \cdot h_n(X)\big)
@@ -396,7 +397,7 @@ The adaboost algorithm is \textbf{always based on very simple models}, usually d
 stumps. \\
 As a consequence, it \textbf{does not overfit}.
 \subsection{Bagging}
-\label{sec:org37f2436}
+\label{sec:orgb57c293}
 Boostrap aggregation is the technique of combining models trained in subsets of the
 training dataset. \\
 The subsets are constructed by uniformly sampling the dataset, and may contain
@@ -413,17 +414,17 @@ The models may be combined using many techniques:
 \end{itemize}
 In practice, the base models are usually decision trees.
 \subsubsection{Random forests}
-\label{sec:org9e05b95}
+\label{sec:orgfcf335b}
 Random forests exploits randomness in instances and features. \\
 Each decision tree is trained with a random subset of \textbf{features} and instances. \\
 As a consequence, random forests circumvent overfitting in decision trees.
 \subsection{Semi-supervised learning}
-\label{sec:orgfb80801}
+\label{sec:orge83a372}
 Semi-supervised learning is the method of combining supervised and unsupervised
 learning, usually when there are small ammounts of labeled data, and large amounts of
 unlabeled data.
 \subsubsection{Active learning}
-\label{sec:org38eeeb8}
+\label{sec:org28ed2ce}
 Active learning is a technique to create optimal training sets, by filtering samples
 with redundant information. \\
 
@@ -445,7 +446,7 @@ samples for which the committee disagrees most.
 generalization error.
 \end{description}
 \section{Unsupervised learning}
-\label{sec:org5f856aa}
+\label{sec:org24b1b7e}
 Unsupervised learning consists to, given only inputs as training, find a pattern:
 \begin{itemize}[itemsep=0pt]
 \item Clusters
@@ -454,7 +455,7 @@ Unsupervised learning consists to, given only inputs as training, find a pattern
 \item Etc.
 \end{itemize}
 \subsection{Distance function}
-\label{sec:org03c7a57}
+\label{sec:org953bc3f}
 Some common distance functions are:
 \begin{description}
 \item[{Nearest neighbor:}] \(\min({|x - y|}^2)\)
@@ -462,14 +463,14 @@ Some common distance functions are:
 \item[{Centroid:}] \({|\mu_i - \mu_j|}^2\)
 \end{description}
 \subsection{Hierarchical agglomerative clustering}
-\label{sec:org717d904}
+\label{sec:org44a8e99}
 The hierarchical agglomerative clustering technique constructs a dendogram based on a
 distance function. \\
 Starting with individual clusters, it iteratively merges the closest ones until the
 dendogram is complete. Finally, a cut across the dendogram corresponds to a similarity
 threshold.
 \subsection{K-Means}
-\label{sec:org4e75bd3}
+\label{sec:orgf698046}
 The K-Means algorithm constructs clusters by placing centroids and agglomerating by the
 closest centroid. \\
 Considering \(k\) clusters, place \(k\) centroids in the space. Update the centroids
@@ -502,20 +503,20 @@ Where \(d\) is the dimensionality of the data, which also plays a fundamental ro
 more dimensions, points tend to get sparse. Therefore, the more dimensions there are,
 the more samples one will need.
 \subsection{Mixture model}
-\label{sec:orgfadfb65}
+\label{sec:org5e27150}
 The mixture model constructs clusters by assigning probabily distributions and
 agglomerating by the most probable distribution. Therefore, it differs from K-Means by
 allowing overlaping clusters. \\
 As in the K-Means algorithm, the distributions are randomly initialized, and updated
 using an expectation-maximization algorithm.
 \section{Reinforcement learning}
-\label{sec:org65b8c4b}
+\label{sec:orgf9737e1}
 Method where you train the program by rewarding the learning algorithm positively or
 negatively according to the produced results. This method is similar to how we teach
 animals.
 \pagebreak
 \section{Deep learning}
-\label{sec:orgf95bf95}
+\label{sec:org36a970a}
 Deep learning is suitable for problems where the features are not well defined:
 \begin{itemize}[itemsep=0pt]
 \item Images
@@ -523,7 +524,7 @@ Deep learning is suitable for problems where the features are not well defined:
 \item Audio
 \end{itemize}
 \subsection{Convolutional neural networks}
-\label{sec:orgdf6eadd}
+\label{sec:orgf6fc7e7}
 Convolutional neural networks are composed of two sets of layers:
 \begin{enumerate}[itemsep=0pt]
 \item Alternate layers of:
@@ -542,7 +543,7 @@ The convolution step is parameterized by:
 \item[{Zero-padding:}] whether to add padding to allow patterns in the borders.
 \end{description}
 \subsection{Natural language processing}
-\label{sec:orgdcd57b6}
+\label{sec:org2455d6b}
 As in convolutional networks, the key technique is how to extract features from the
 input. \\
 To learn how to represent data, a network composed of two sets of layers is used to
@@ -559,9 +560,9 @@ network has not only produced the prediction model, but also a feature model in 
 first layer. This feature model can be used as input layer for any other network,
 including networks with other targets.
 \subsection{Unsupervised feature learning}
-\label{sec:org7e6a2f3}
+\label{sec:org7e4f9c2}
 \subsubsection{Autoencoder}
-\label{sec:orgdad630e}
+\label{sec:orgaac1689}
 The autoencoder is a neural network with one hidden layer that implements a lossy
 compression machine. By compressing and decompressing the input, it removes irrelevant
 data due to the loss. Such network can be trained as it was supervised, as the
@@ -569,4 +570,14 @@ expected output is the input itself. \\
 
 Because the hidden layer has a smaller dimension than the input, it can be used with
 the input layer as a feature model that reduces the dimensionality.
+\subsection{Generative adversarial networks}
+\label{sec:org7e90ab1}
+Generative adversarial networks aim to train a generative network, using an
+discriminative network. \\
+Both networks compete in a zero-sum game, that converges when both players don't
+change their output given the oponent's output.
+\begin{center}
+\includesvg[width=200px]{images/gan}
+\end{center}
+The error function for the generator is whether the discriminator missed.
 \end{document}

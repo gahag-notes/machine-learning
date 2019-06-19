@@ -1,6 +1,8 @@
 # -*- after-save-hook: org-latex-export-to-pdf; -*-
+#+property: header-args :eval never-export
 #+latex_header: \usepackage[margin=2cm]{geometry}
 #+latex_header: \usepackage{enumitem}
+#+latex_header: \usepackage{svg}
 #+latex_header: \DeclareMathOperator{\sign}{sign}
 #+latex_header: \setlength{\parindent}{0cm}
 #+latex_header: \usepackage{pgfplots}
@@ -530,3 +532,31 @@
 
     Because the hidden layer has a smaller dimension than the input, it can be used with
     the input layer as a feature model that reduces the dimensionality.
+** Generative adversarial networks
+   Generative adversarial networks aim to train a generative network, using an
+   discriminative network. \\
+   Both networks compete in a zero-sum game, that converges when both players don't
+   change their output given the oponent's output.
+   #+begin_src dot :file images/gan.svg :exports results
+     digraph G {
+       node[shape=box];
+       noise;
+       generator;
+       "generated sample";
+       "data sample";
+       choice[shape=circle];
+       "yes/no"[shape=circle];
+
+       noise -> generator;
+       generator -> "generated sample";
+       "generated sample" -> choice;
+       "data sample" -> choice;
+       choice -> discriminator;
+       discriminator -> "yes/no" [ label="    data sample?        " ];
+       "yes/no" -> generator [ label="  error", style="dashed" ];
+     }
+   #+end_src
+   #+attr_latex: :width 200px
+   #+results:
+   [[file:images/gan.svg]]
+   The error function for the generator is whether the discriminator missed.
